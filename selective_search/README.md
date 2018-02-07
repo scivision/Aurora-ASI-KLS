@@ -1,10 +1,15 @@
 # Overview
 
-This is a python implementation of Selective Search [[1]](#selective_search_ijcv)[[2]](#selective_search_iccv). It is forked from [belltailjp/selective_search.py](https://github.com/belltailjp/selective_search_py) to backport it from Python 3 to Python 2.7.
+This is a python implementation of Selective Search [[1]](#selective_search_ijcv)[[2]](#selective_search_iccv). 
+It is forked from 
+[belltailjp/selective_search.py](https://github.com/belltailjp/selective_search_py) 
+to backport it from Python 3 to Python 2.7.
 
-The Selective Search is used as a preprocess of object detection/recognition pipeline.<br/>
+The Selective Search is used as a preprocess of object detection/recognition pipeline.
+
 It finds regions likely to contain any objects from an input image regardless of its scale and location,
-that allows detectors to concentrate only for such 'prospective' regions.<br/>
+that allows detectors to concentrate only for such 'prospective' regions.
+
 Therefore you can configure more computationally efficient detector,
 or use more rich feature representation and classification method [[3]](#deeplearning)
 compared to the conventional exhaustive search scheme.

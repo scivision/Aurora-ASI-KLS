@@ -1,7 +1,7 @@
 #include <iostream>
 #include <map>
 #include <boost/python.hpp>
-#include <boost/numpy.hpp>
+#include <boost/python/numpy.hpp>
 #include "segment/segment-image.h"
 
 static int operator<(const rgb& x, const rgb& y)
