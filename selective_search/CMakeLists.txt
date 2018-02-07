@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
+add_compile_options(-Wfatal-errors)
 
 # https://cmake.org/cmake/help/latest/module/FindPythonLibs.html
 find_package(PythonInterp REQUIRED)
