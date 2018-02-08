@@ -1,7 +1,6 @@
+#!/usr/bin/env python
+from pathlib import Path
 import sys
-sys.path.insert(0, '../../selective_search_py')
-sys.path.insert(0, '../../fast-rcnn/lib')
-sys.path.insert(0, '../../fast-rcnn/caffe-fast-rcnn/python')
 import caffe
 from fast_rcnn.test_kls import im_detect
 import selective_search as ss
@@ -18,6 +17,12 @@ import time
 from skimage import feature
 import src.local_feature.dsift as dsift
 import h5py
+from pathlib import Path
+#
+ROOT = Path(__file__).parents[1]
+sys.path.insert(0, ROOT/'selective_search_py')
+sys.path.insert(0, ROOT/'fast-rcnn/lib')
+sys.path.insert(0, ROOT/'fast-rcnn/caffe-fast-rcnn/python')
 
 def normalizeVecs(vecs):
     len_vecs = np.sqrt(np.sum(vecs ** 2, axis=1))

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import zipfile
+import subprocess
 import urllib.request
 from pathlib import Path
 from setuptools import setup, find_packages, Extension
@@ -37,12 +38,12 @@ dlex(sURL)
 
 #%%
 
-
+# FIXME include Boost Python via conda
 segmod = Extension('segment',
                     sources = ['selective_search/segment_py.cpp'])
 
 setup(name='aurora_kls',
       packages = find_packages(),
       description = 'Auroral segmentation',
-      python_requires='>=3.6',
-      ext_modules=[segmod])
+      python_requires='>=3.6',)
+      #ext_modules=[segmod])

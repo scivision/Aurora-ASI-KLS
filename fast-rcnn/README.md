@@ -1,4 +1,7 @@
-### This code base is no longer maintained and exists as a historical artifact to supplement my ICCV 2015 paper. For more recent work that's faster and more accurrate, please see [Faster R-CNN](https://github.com/rbgirshick/py-faster-rcnn) (which also includes functionality for training Fast R-CNN).
+### This code base is no longer maintained and exists as a historical artifact to supplement my ICCV 2015 paper. 
+For more recent work that's faster and more accurrate, please see 
+[Faster R-CNN](https://github.com/rbgirshick/py-faster-rcnn) 
+(which also includes functionality for training Fast R-CNN).
 
 # *Fast* R-CNN: Fast Region-based Convolutional Networks for object detection
 
@@ -12,7 +15,9 @@ Created by Ross Girshick at Microsoft Research, Redmond.
  - has a significantly higher mAP on PASCAL VOC than both R-CNN and SPPnet,
  - and is written in Python and C++/Caffe.
 
-Fast R-CNN was initially described in an [arXiv tech report](http://arxiv.org/abs/1504.08083) and later published at ICCV 2015.
+Fast R-CNN was initially described in an 
+[arXiv tech report](http://arxiv.org/abs/1504.08083) 
+and later published at ICCV 2015.
 
 ### License
 

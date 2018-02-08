@@ -22,12 +22,13 @@ Cmake, C++ compiler, Boost>=1.63 are required in addition to Python.
   Due to outdated Boost for many Linux distros, consider using Anaconda/[Miniconda Python](https://conda.io/miniconda.html) to get Boost
   ```sh
   conda install boost
-
-  cmake -DBOOST_INCLUDEDIR=$HOME/miniconda3/include -DBOOST_LIBRARYDIR=$HOME/miniconda3/lib ..
   ```
-  assuming your Anaconda install is under `$HOME/miniconda3` (the default)
 * Mac: `brew install cmake make gcc boost boost-python`
 
+All operating systems with Anaconda/Miniconda:
+```sh
+conda install caffe
+```
 
 ### Setup
 1.  Get the code.
@@ -35,32 +36,31 @@ Cmake, C++ compiler, Boost>=1.63 are required in addition to Python.
     git clone https://github.com/niuchuangnn/Aurora-ASI-KLS
     cd Aurora-ASI-KLS
     pip install -e .
-    cmake .
-    make
-
-    cd &KLS_ROOT/fast-rcnn/caffe-fast-rcnn
-    make all
-    make pycaffe
-    cd &KLS_ROOT/fast-rcnn/lib
-    make
     ```
-2.  Download the region detection [model](https://1drv.ms/u/s!ArnlNXPnKNAKjQWsM4hsLuvu8cNW)
+    Following steps are under this `Aurora-ASI-KLS` directory.
+2.  Build selective_python code
     ```sh
-    cd $KLS_ROOT/Data
-    mkdir -p region_classification/output
+    cd selective_search/lib
+
+    cmake -DBOOST_INCLUDEDIR=$HOME/miniconda3/include -DBOOST_LIBRARYDIR=$HOME/miniconda3/lib ..
+    make
     ```
-    Put the downloaded model into this folder.
+    assuming your Anaconda install is under `$HOME/miniconda3` (the default)
+3.  Download the region detection [model](https://1drv.ms/u/s!ArnlNXPnKNAKjQWsM4hsLuvu8cNW)
+    ```sh
+    mkdir -p Data/region_classification/output
+    ```
+    Put the downloaded model into the `.../output` folder.
 
-3. Run demo.
-
+## Uaage
 ```
-cd $KLS_ROOT/src/demo
+cd src/demo
 python demo.py
 ```
 You will see:
 ```
-classification time: 1.2338631897
-segmentation time: 1.77530801296
+classification time: 1.234
+segmentation time: 1.775
 ```
 ![arc](https://github.com/niuchuangnn/Aurora-ASI-KLS/blob/master/Data/demo_examples/a_r.png)
 ![drapery](https://github.com/niuchuangnn/Aurora-ASI-KLS/blob/master/Data/demo_examples/D_r.png)
@@ -68,5 +68,7 @@ segmentation time: 1.77530801296
 ![hot-spot](https://github.com/niuchuangnn/Aurora-ASI-KLS/blob/master/Data/demo_examples/HS_r.png)
 
 ## Notes
-Tested on Linux, but should work on other operating systems.
-Start a [GitHub Issue](https://github.com/niuchuangnn/Aurora-ASI-KLS/issues) if it doesn't work for you.
+
+* Tested on Linux, but should work on other operating systems.
+* Windows may be difficult due to large number of prereqs--use [Windows Subsystem for Linux](https://www.scivision.co/install-windows-subsystem-for-linux/)
+* Start a [GitHub Issue](https://github.com/niuchuangnn/Aurora-ASI-KLS/issues) if it doesn't work for you.
