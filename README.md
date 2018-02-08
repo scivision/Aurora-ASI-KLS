@@ -14,6 +14,7 @@ These codes are not directly uesd by this project, but you must make sure that t
 
 
 ## Install
+GPU is required.
 
 ### Prereq
 Cmake, C++ compiler, Boost>=1.63 are required in addition to Python.
