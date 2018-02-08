@@ -14,7 +14,6 @@ import numpy as np
 import cv2
 import caffe
 from utils.cython_nms import nms
-import cPickle
 import heapq
 from utils.blob_kls import im_list_to_blob
 import os

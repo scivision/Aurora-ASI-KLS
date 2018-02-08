@@ -56,15 +56,15 @@ def sampleImages(names, mode='Uniform', timediff = 60, sampleNum = 500):
         return names[:sampleNum]
 
 def writeArrangeImgsToFile(arrangeImgs, filePath, labelAdjust=None, addType=None):
-    f = open(filePath, 'w')
-    for label, images in arrangeImgs.iteritems():
-        if labelAdjust is not None:
-            label = str(int(label) + labelAdjust)
-        for name in images:
-            if addType is not None:
-                name += addType
-            f.write(name + ' ' + label + '\n')
-    f.close()
+    with open(filePath, 'w') as f:
+        for label, images in arrangeImgs.iteritems():
+            if labelAdjust is not None:
+                label = str(int(label) + labelAdjust)
+            for name in images:
+                if addType is not None:
+                    name += addType
+                f.write(name + ' ' + label + '\n')
+
     return 0
 
 def arrangeToClasses(names, labels, classNum=4, classLabel=[['1'], ['2'], ['3'], ['4']]):
@@ -83,6 +83,7 @@ def arrangeToClasses(names, labels, classNum=4, classLabel=[['1'], ['2'], ['3'],
         return arrangeImgs
     if classNum < 4:
         return arrangeImgs, rawTypes
+
 
 def arrangeToDays(names, labels):
     name_days = {}
@@ -215,19 +216,22 @@ def calculateImgsMean(imgsFile, dataFolder, imgType=None):
         im = imread(imgFile)
         mean += im.mean()
     mean = mean / len(names)
-    print imgsFile + ' mean: ' + str(mean)
+    print(imgsFile,'mean:',mean)
+
     return mean
+
+
 def adjustLables(labelFile, adjust=-1):
     [names, labels] = parseNL(labelFile)
     labels_num = [int(x) for x in labels]
     labels_num = list(np.array(labels_num) + adjust)
     labels = [str(x) for x in labels_num]
-    f = open(labelFile, 'w')
-    for i in xrange(len(labels)):
-        name = names[i]
-        label = labels[i]
-        f.write(name + ' ' + label + '\n')
-    f.close()
+    with open(labelFile, 'w') as f:
+        for i in range(len(labels)):
+            name = names[i]
+            label = labels[i]
+            f.write(name + ' ' + label + '\n')
+
     return 0
 
 def selectTypeImages(labelFile, select_types, savePath=None, withExt=None):
@@ -259,11 +263,10 @@ if __name__ == '__main__':
     names_days, labels_days, days = arrangeToDays(names, labels)
     splitConfigFile(allLabels, savePathes=savePathes, labelAdjust=-1, addType=imgType, isBalabceSamples=[True, False])
     # calculateImgsMean(savePathes[0], dataFolder='../../Data/all38044JPG/')
-    print compareLabeledFile(allLabels, savePathes[0], labelAdjust=1, addType=imgType)
-    print compareLabeledFile(allLabels, savePathes[1], labelAdjust=1, addType=imgType)
-    print days
+    print(compareLabeledFile(allLabels, savePathes[0], labelAdjust=1, addType=imgType))
+    print(compareLabeledFile(allLabels, savePathes[1], labelAdjust=1, addType=imgType))
+    print(days)
     # labelFile1 = '../../Data/train_16_3_7_2663.txt'
     # adjustLables(labelFile1)
     # select = '../../Data/all_arc.txt'
     # selectTypeImages(allLabels, ['1'], select, withExt='.jpg')
-    pass

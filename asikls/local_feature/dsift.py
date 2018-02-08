@@ -1,5 +1,5 @@
 '''
-dsift.py: this function implements some basic functions that 
+dsift.py: this function implements some basic functions that
 does dense sift feature extraction.
 
 The descriptors are defined in a similar way to the one used in
@@ -68,7 +68,7 @@ class DsiftExtractor:
         sample_ph, sample_pw = np.meshgrid(sample_p,sample_p)
         sample_ph.resize(sample_ph.size)
         sample_pw.resize(sample_pw.size)
-        bincenter = np.array(range(1,Nbins*2,2)) / 2.0 / Nbins * self.pS - 0.5 
+        bincenter = np.array(range(1,Nbins*2,2)) / 2.0 / Nbins * self.pS - 0.5
         bincenter_h, bincenter_w = np.meshgrid(bincenter,bincenter)
         bincenter_h.resize((bincenter_h.size,1))
         bincenter_w.resize((bincenter_w.size,1))
@@ -82,19 +82,19 @@ class DsiftExtractor:
         self.weights = weights_h * weights_w
         #pyplot.imshow(self.weights)
         #pyplot.show()
-        
+
     def process_image(self, image, positionNormalize = True,\
                        verbose = True):
         '''
         processes a single image, return the locations
         and the values of detected SIFT features.
-        image: a M*N image which is a numpy 2D array. If you 
+        image: a M*N image which is a numpy 2D array. If you
             pass a color image, it will automatically be converted
             to a grayscale image.
         positionNormalize: whether to normalize the positions
             to [0,1]. If False, the pixel-based positions of the
             top-right position of the patches is returned.
-        
+
         Return values:
         feaArr: the feature array, each row is a feature
         positions: the positions of the features
@@ -116,8 +116,7 @@ class DsiftExtractor:
         gridH = gridH.flatten()
         gridW = gridW.flatten()
         if verbose:
-            print 'Image: w {}, h {}, gs {}, ps {}, nFea {}'.\
-                    format(W,H,gS,pS,gridH.size)
+            print('Image: w {}, h {}, gs {}, ps {}, nFea {}'.format(W,H,gS,pS,gridH.size))
         feaArr = self.calculate_sift_grid(image,gridH,gridW)
         feaArr = self.normalize_sift(feaArr)
         if positionNormalize:
@@ -184,10 +183,10 @@ class SingleSiftExtractor(DsiftExtractor):
                  sift_thres = 0.2):
         # simply call the super class __init__ with a large gridSpace
         DsiftExtractor.__init__(self, patchSize, patchSize, nrml_thres, sigma_edge, sift_thres)
-    
+
     def process_image(self, image):
         return DsiftExtractor.process_image(self, image, False, False)[0]
-    
+
 if __name__ == '__main__':
     # ignore this. I only use this for testing purpose...
     from scipy import misc
@@ -201,12 +200,12 @@ if __name__ == '__main__':
     #pyplot.imshow(feaArr[:256])
     #pyplot.plot(np.sum(feaArr,axis=0))
     pyplot.imshow(feaArr[np.random.permutation(feaArr.shape[0])[:256]])
-    
+
     # test single sift extractor
     extractor = SingleSiftExtractor(16)
     feaArrSingle = extractor.process_image(image[:16,:16])
-    print feaArr[0].shape
-    print feaArrSingle.shape
+    print(feaArr[0].shape)
+    print(feaArrSingle.shape)
     pyplot.figure()
     pyplot.plot(feaArr[0],'r')
     pyplot.plot(feaArrSingle[0],'b')

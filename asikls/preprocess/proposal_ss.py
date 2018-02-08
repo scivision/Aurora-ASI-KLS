@@ -1,22 +1,22 @@
+from pathlib import Path
 import skimage.data
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-sys.path.insert(0, '../../selective_search_py')
-import argparse
 import warnings
 import numpy
 import skimage.io
-import features
-import color_space
-import selective_search
-import src.util.paseLabeledFile as plf
+import asikls.util.paseLabeledFile as plf
 import os
-from scipy.misc import imread, imresize, imsave
+from scipy.misc import imread,  imsave
 from skimage.transform import rotate
 import h5py
-import warnings
-warnings.filterwarnings("ignore")
+#warnings.filterwarnings("ignore")
+#
+ROOT=Path(__file__).parents[1]
+sys.path.insert(0, 'selective_search')
+print(ROOT)
+import color_space,selective_search
 
 def generate_color_table(R):
     # generate initial color
@@ -28,6 +28,7 @@ def generate_color_table(R):
             colors[region] = colors[parent[0]]
 
     return colors
+
 
 def filterOverlap(regions, thresh):
     if regions.shape[0] != 0:
@@ -72,7 +73,7 @@ def special_common_local_proposal(paras):
     is_rotate = paras['is_rotate']
     region_set = selective_search.selective_search_M(paras)
     if train:
-        print 'regions_set', region_set[0]
+        print('regions_set', region_set[0])
         regions = {}
         for rs in region_set:
             ri = rs[0]
@@ -208,7 +209,7 @@ def generateSpecialCommonBbox(labelFile, savePath, dataFolder, imgType, paras):
         group.create_dataset('labels_common', shape=labels_common.shape, dtype='i', data=labels_common)
         d_special.attrs['angle'] = angle_special
         d_common.attrs['angle'] = angle_common
-        print name, 'bbox saved'
+        print(name, 'bbox saved')
     fs.close()
     return 0
 
@@ -325,7 +326,7 @@ if __name__=="__main__":
     else:
         regions = special_common_local_proposal(paras)
     # regions = list(regions)
-    print np.array(regions)
+    print(np.array(regions))
     if paras['train']:
         for k, v in regions.iteritems():
             plf.showGrid(img, v)

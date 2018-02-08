@@ -32,8 +32,7 @@ class SolverWrapper_kls(object):
 
         self.solver = caffe.SGDSolver(solver_prototxt)
         if pretrained_model is not None:
-            print ('Loading pretrained model '
-                   'weights from {:s}').format(pretrained_model)
+            print('Loading pretrained model weights from',pretrained_model)
             self.solver.net.copy_from(pretrained_model)
 
         self.solver_param = caffe_pb2.SolverParameter()
@@ -41,6 +40,7 @@ class SolverWrapper_kls(object):
             pb2.text_format.Merge(f.read(), self.solver_param)
 
         self.solver.net.layers[0].set_roidb(klsdb)
+
 
     def snapshot(self):
         """Take a snapshot of the network after unnormalizing the learned
@@ -71,7 +71,7 @@ class SolverWrapper_kls(object):
         filename = os.path.join(self.output_dir, filename)
 
         net.save(str(filename))
-        print 'Wrote snapshot to: {:s}'.format(filename)
+        print('Wrote snapshot to:',filename)
 
         if cfg.TRAIN.BBOX_REG:
             # restore net to original state
@@ -88,7 +88,7 @@ class SolverWrapper_kls(object):
             self.solver.step(1)
             timer.toc()
             if self.solver.iter % (10 * self.solver_param.display) == 0:
-                print 'speed: {:.3f}s / iter'.format(timer.average_time)
+                print('speed: {:.3f} s / iter'.format(timer.average_time))
 
             if self.solver.iter % cfg.TRAIN.SNAPSHOT_ITERS == 0:
                 last_snapshot_iter = self.solver.iter
@@ -100,13 +100,13 @@ class SolverWrapper_kls(object):
 def get_training_roidb(imdb):
     """Returns a roidb (Region of Interest database) for use in training."""
     if cfg.TRAIN.USE_FLIPPED:
-        print 'Appending horizontally-flipped training examples...'
+        print('Appending horizontally-flipped training examples...')
         imdb.append_flipped_images()
-        print 'done'
+        print('done')
 
-    print 'Preparing training data...'
+    print('Preparing training data...')
     rdl_roidb.prepare_roidb(imdb)
-    print 'done'
+    print('done')
 
     return imdb.roidb
 
@@ -116,6 +116,6 @@ def train_net_kls(solver_prototxt, klsdb, output_dir,
     sw = SolverWrapper_kls(solver_prototxt, klsdb, output_dir,
                        pretrained_model=pretrained_model)
 
-    print 'Solving...'
+    print('Solving...')
     sw.train_model(max_iters)
-    print 'done solving'
+    print('done solving')

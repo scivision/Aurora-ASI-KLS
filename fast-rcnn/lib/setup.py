@@ -4,9 +4,9 @@
 # Licensed under The MIT License [see LICENSE for details]
 # Written by Ross Girshick
 # --------------------------------------------------------
-
+install_requires = ['numpy','cython','easydict']
 import numpy as np
-from distutils.core import setup
+from setuptools import setup,find_packages
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
@@ -27,7 +27,9 @@ cmdclass.update({'build_ext': build_ext})
 
 setup(
     name='fast_rcnn',
+    packages=find_packages(),
     cmdclass=cmdclass,
     ext_modules=ext_modules,
-    include_dirs=[np.get_include()]
+    include_dirs=[np.get_include()],
+    install_requires=install_requires,
 )

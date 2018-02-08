@@ -46,7 +46,12 @@ conda install caffe
     make
     ```
     assuming your Anaconda install is under `$HOME/miniconda3` (the default)
-3.  Download the region detection [model](https://1drv.ms/u/s!ArnlNXPnKNAKjQWsM4hsLuvu8cNW)
+3.  Build fast-rcnn
+    ```sh
+    cd fast-rcnn/lib
+    pip install - e.
+    ```
+4.  Download the region detection [model](https://1drv.ms/u/s!ArnlNXPnKNAKjQWsM4hsLuvu8cNW)
     ```sh
     mkdir -p Data/region_classification/output
     ```
@@ -54,7 +59,6 @@ conda install caffe
 
 ## Uaage
 ```
-cd src/demo
 python demo.py
 ```
 You will see:

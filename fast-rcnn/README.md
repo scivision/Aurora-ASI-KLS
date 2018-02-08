@@ -150,40 +150,33 @@ Here are some pointers; if you run into trouble using these resources please dir
 Apologies if I've left your method off this list. Feel free to contact me and ask for it to be included.
 
 ### Beyond the demo: installation for training and testing models
-1. Download the training, validation, test data and VOCdevkit
-
-	```Shell
+1.  Download the training, validation, test data and VOCdevkit
+	```sh
 	wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 	wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
 	wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCdevkit_08-Jun-2007.tar
 	```
-	
-2. Extract all of these tars into one directory named `VOCdevkit`
-
-	```Shell
+2.  Extract all of these tars into one directory named `VOCdevkit`
+	```sh
 	tar xvf VOCtrainval_06-Nov-2007.tar
 	tar xvf VOCtest_06-Nov-2007.tar
 	tar xvf VOCdevkit_08-Jun-2007.tar
 	```
-
-3. It should have this basic structure
-
-	```Shell
+3.  It should have this basic structure
+	```sh
   	$VOCdevkit/                           # development kit
   	$VOCdevkit/VOCcode/                   # VOC utility code
   	$VOCdevkit/VOC2007                    # image sets, annotations, etc.
   	# ... and several other directories ...
   	```
-  	
-4. Create symlinks for the PASCAL VOC dataset
-
+4.  Create symlinks for the PASCAL VOC dataset
 	```Shell
     cd $FRCN_ROOT/data
     ln -s $VOCdevkit VOCdevkit2007
     ```
     Using symlinks is a good idea because you will likely want to share the same PASCAL dataset installation between multiple projects.
-5. [Optional] follow similar steps to get PASCAL VOC 2010 and 2012
-6. Follow the next sections to download pre-computed object proposals and pre-trained ImageNet models
+5.  [Optional] follow similar steps to get PASCAL VOC 2010 and 2012
+6.  Follow the next sections to download pre-computed object proposals and pre-trained ImageNet models
 
 ### Download pre-computed Selective Search object proposals
 

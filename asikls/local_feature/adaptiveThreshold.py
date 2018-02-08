@@ -2,9 +2,6 @@ import numpy as np
 from scipy.misc import imread, imresize
 import matplotlib.pyplot as plt
 import math
-from scipy import signal
-import os
-import src.util.paseLabeledFile as plf
 
 def calculateImgHist(imgFile, imResize=None, imSize=440):
     im = imread(imgFile)
@@ -19,6 +16,7 @@ def calculateImgHist(imgFile, imResize=None, imSize=440):
     hist[0] -= outCircleSize
     return hist
 
+
 def adaptiveLinear(x):
     maxTh = 80
     a = 0.005
@@ -26,14 +24,17 @@ def adaptiveLinear(x):
     y = min(b + a * x, maxTh)
     return y
 
+
 def calAdapList(xl):
     yl = [adaptiveLinear(x) for x in xl]
     return yl
+
 
 def calculateThreshold(imgFile, imResize=None):
     hist = calculateImgHist(imgFile, imResize=imResize)
     thresh = adaptiveLinear(hist[180:].sum())
     return thresh
+
 
 if __name__ == '__main__':
     imgFile = '/home/amax/NiuChuang/KLSA-auroral-images/Data/all38044JPG/N20040117G130515.jpg'

@@ -34,7 +34,7 @@ def dlex(url:str, outdir:Path=None) -> Path:
 
     return outdir
 
-dlex(sURL)
+dlex(sURL,'.')
 
 #%%
 

@@ -3,26 +3,24 @@ from pathlib import Path
 import sys
 import caffe
 from fast_rcnn.test_kls import im_detect
-import selective_search as ss
 import skimage.io
 import os
 from scipy.misc import imread, imsave
-from src.preprocess.proposal_ss import filterOverlap
-import src.util.paseLabeledFile as plf
-import segment
 import numpy as np
 import matplotlib.pyplot as plt
-from src.local_feature.adaptiveThreshold import calculateThreshold
 import time
 from skimage import feature
-import src.local_feature.dsift as dsift
 import h5py
-from pathlib import Path
 #
-ROOT = Path(__file__).parents[1]
-sys.path.insert(0, ROOT/'selective_search_py')
+ROOT = Path(__file__).parent
+sys.path.insert(0, ROOT/'selective_search')
 sys.path.insert(0, ROOT/'fast-rcnn/lib')
-sys.path.insert(0, ROOT/'fast-rcnn/caffe-fast-rcnn/python')
+import segment
+import selective_search as ss
+from asikls.preprocess.proposal_ss import filterOverlap
+import asikls.util.paseLabeledFile as plf
+from asikls.local_feature.adaptiveThreshold import calculateThreshold
+import asikls.local_feature.dsift as dsift
 
 def normalizeVecs(vecs):
     len_vecs = np.sqrt(np.sum(vecs ** 2, axis=1))
@@ -290,7 +288,7 @@ def mergePatchAndRegion(classHeatMaps, categoryHeatMaps, labels, th):
 
 def mapsToLabels(classHeatMaps, detection_mask=None):
     regionHeatSizes = np.zeros((classHeatMaps.shape[2]-1, ))
-    for i in xrange(1, classHeatMaps.shape[2]):
+    for i in range(1, classHeatMaps.shape[2]):
         map_i = classHeatMaps[:, :, i]
         if detection_mask is not None:
             map_i *= detection_mask
@@ -331,7 +329,7 @@ def regionSetToBoxes(regionsSet, overlapThresh, sizeRange=[0, 440*440], isVisual
 def generateRegionClassHeatMap(scores, boxes, th, imageShape=[440, 440]):
     region_class_heatMap = np.zeros((imageShape[0], imageShape[1], scores.shape[1]))
     heatMap_plusNumber = np.zeros((imageShape[0], imageShape[1], scores.shape[1]))
-    for i in xrange(boxes.shape[0]):
+    for i in range(boxes.shape[0]):
         box = boxes[i, :]
         score = scores[i, :]
         label = score.argmax()
@@ -407,9 +405,9 @@ if __name__ == '__main__':
     proposal_maxSize = 440 * 220
     paras['regionSizeRange'] = [proposal_minSize, proposal_maxSize]
 
-    eraseMapPath = '../../Data/eraseMap.bmp'
-    regionModelWeights = '../../Data/region_classification/output/vgg_cnn_m_1024_fast_rcnn_b500_iter_10000.caffemodel'
-    regionModelPrototxt = '../../fast-rcnn/models/VGG_CNN_M_1024/test_kls.prototxt'
+    eraseMapPath = 'Data/eraseMap.bmp'
+    regionModelWeights = 'Data/region_classification/output/vgg_cnn_m_1024_fast_rcnn_b500_iter_10000.caffemodel'
+    regionModelPrototxt = 'fast-rcnn/models/VGG_CNN_M_1024/test_kls.prototxt'
     if not os.path.exists(eraseMapPath):
         imSize = 440
         eraseMap = np.zeros((imSize, imSize))
@@ -503,7 +501,7 @@ if __name__ == '__main__':
 
             fig_id += 1
 
-    print "classification time: " + str(cls_time / len(imgFiles))
-    print "segmentation time: " + str(seg_time / len(imgFiles))
+    print("classification time:",cls_time / len(imgFiles))
+    print("segmentation time:",seg_time / len(imgFiles))
     plt.show()
 
